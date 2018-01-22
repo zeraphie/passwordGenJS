@@ -26,7 +26,7 @@
     "url": "https://github.com/zeraphie/passwordGenJS/issues"
   },
   "homepage": "https://github.com/zeraphie/passwordGenJS#readme",
-  "optionalDependencies": {
+  "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",

@@ -8,7 +8,7 @@ This is available as a package on npm so you can add this to your project by usi
 
 **npm**
 ```bash
-npm install z-password-gen --save-dev
+npm install z-password-gen --save-dev --production
 ```
 
 **yarn**
@@ -59,12 +59,9 @@ Below are the character groups used in the `generateKeyspace` method
 ---
 
 ## Building
-If for some reason, you want to build the files for this library yourself (instead of using `dist/passwordGen.js`), you can run the following commands to work locally with it
+If for some reason, you want to build the files for this library yourself (instead of using the `dist` folder), you can run the following commands to work locally with it
 
-**Install dependencies for `gulp`**
-```bash
-npm install  --save-optional
-```
+*Note: Don't forget to install the dev dependencies*
 
 **Running `gulp`
 ```bash
