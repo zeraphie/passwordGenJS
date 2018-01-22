@@ -1,12 +1,16 @@
-/*==============================================================================
- Password generator class
- 
- This is a javascript version of my PasswordGen PHP library accessible here:
- https://github.com/zeraphie/passwordGen
- 
- This does not rely on any outside libraries apart from the window.crypto
- object, and has browser support for at least IE11+
- =============================================================================*/
+/**
+ * Password generator class
+ *
+ * This is a JavaScript version of my PasswordGen PHP library accessible here:
+ * https://github.com/zeraphie/passwordGen
+ *
+ * This does not rely on any outside libraries apart from the window.crypto
+ * object, and has browser support for at least IE11+
+ *
+ * @license MIT
+ * @version 1.0.2
+ * @author Izzy Skye
+ */
 export default class PasswordGen {
     /**
      * Create a new PasswordGen instance and setting the default character
@@ -30,7 +34,7 @@ export default class PasswordGen {
      * Getter for minimum_length class variable for the minimum length of
      * the password generated
      *
-     * @return number                           The minimum password length
+     * @return {number} The minimum password length
      */
     static get minimum_length(){
         return 8;
@@ -40,7 +44,7 @@ export default class PasswordGen {
      * Getter for maximum_random_integer class variable for the maximum limit of
      * random integer
      *
-     * @return number                           The maximum random integer
+     * @return {number} The maximum random integer
      */
     static get maximum_random_integer(){
         return 256;
@@ -50,7 +54,7 @@ export default class PasswordGen {
      * Getter for default_length class variable used to generate the default
      * password length
      *
-     * @return number                           The default password length
+     * @return {number} The default password length
      */
     static get default_length(){
         return 16;
@@ -59,7 +63,7 @@ export default class PasswordGen {
     /**
      * Getter for default_sets class variable used to generate the keyspace
      *
-     * @return string                           The default sets
+     * @return {string} The default sets
      */
     static get default_sets(){
         return 'luns';
@@ -68,7 +72,7 @@ export default class PasswordGen {
     /**
      * Getter for lowercase_letters set used in generating the keyspace
      *
-     * @return string                           All lower case letters
+     * @return {string} All lower case letters
      */
     static get lowercase_letters(){
         return 'abcdefghijklmnopqrstuvwxyz';
@@ -77,7 +81,7 @@ export default class PasswordGen {
     /**
      * Getter for uppercase_letters set used in generating the keyspace
      *
-     * @return string                           All upper case letters
+     * @return {string} All upper case letters
      */
     static get uppercase_letters(){
         return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -86,7 +90,7 @@ export default class PasswordGen {
     /**
      * Getter for numbers set used in generating the keyspace
      *
-     * @return string                           All single digits
+     * @return {string} All single digits
      */
     static get numbers(){
         return '1234567890';
@@ -95,7 +99,7 @@ export default class PasswordGen {
     /**
      * Getter for special_characters set used in generating the keyspace
      *
-     * @return string                           All special characters used
+     * @return {string} All special characters used
      */
     static get special_characters(){
         return '!@#$%&*?,./|[]{}()';
@@ -104,7 +108,7 @@ export default class PasswordGen {
     /**
      * Getter for whitespace set used in generating the keyspace
      *
-     * @return string                           All whitespace characters used
+     * @return {string} All whitespace characters used
      */
     static get whitespace(){
         return ' ';
@@ -113,7 +117,7 @@ export default class PasswordGen {
     /**
      * Getter for whitespace set used in generating the keyspace
      *
-     * @return string                           All whitespace characters used
+     * @return {object} All whitespace characters used
      */
     static get character_sets(){
         return {
@@ -128,10 +132,9 @@ export default class PasswordGen {
     /**
      * Test if any elements of an array exist as keys in another array
      *
-     * @param  needles          array           The needles to search for
-     * @param  haystack         array           The haystack to search
-     * @return boolean                          Whether any needles exist as
-     *                                          array keys in the haystack
+     * @param needles {array} The needles to search for
+     * @param haystack {object} The haystack to search
+     * @returns {boolean} Whether any needles exist as keys in the haystack
      */
     static arrayKeySearch(needles, haystack){
         let i = 0, length = needles.length;
@@ -152,55 +155,39 @@ export default class PasswordGen {
     /**
      * Generate a cryptographically strong random number between two values
      *
-     * @param  min              number          The minimum number
-     * @param  max              number          The maximum number
-     * @return integer
+     * @param min {number} The minimum number
+     * @param max {number} The maximum number
+     * @returns {number|*}
      */
     static randomInteger(min, max){
-        try {
-            if(max < this.maximum_random_integer){
-                let crypto = window.crypto || window.msCrypto;
-                let byteArray = new Uint8Array(1);
-                crypto.getRandomValues(byteArray);
-                
-                let range = max - min + 1;
-                
-                if(
-                    byteArray[0]
-                        >=
-                    Math.floor(this.maximum_random_integer / range) * range
-                ){
-                    return this.randomInteger(min, max);
-                }
-                
-                return min + (byteArray[0] % range);
-            } else {
-                throw `Sorry the maximum is too large\n` +
-                `The maximum size is ${this.maximum_random_integer}\n`;
+        if(max < this.maximum_random_integer){
+            let crypto = window.crypto || window.msCrypto;
+            let byteArray = new Uint8Array(1);
+            crypto.getRandomValues(byteArray);
+            
+            let range = max - min + 1;
+            
+            if(
+                byteArray[0]
+                    >=
+                Math.floor(this.maximum_random_integer / range) * range
+            ){
+                return this.randomInteger(min, max);
             }
-        } catch(e) {
-            console.log(e);
+            
+            return min + (byteArray[0] % range);
+        } else {
+            throw `Sorry the maximum is too large\n` +
+            `The maximum size is ${this.maximum_random_integer}\n`;
         }
-    }
-    
-    /**
-     * Return an error message if a variable is too long
-     *
-     * @param  variable         string          The variable that's too long
-     * @return string                           The error message
-     */
-    errorTooLong(variable){
-        return `Sorry the ${variable} is too long\n` +
-            `The maximum length is ${this.constructor.maximum_random_integer} characters\n` +
-            `The default ${variable} is currently being used`;
     }
     
     /**
      * Set the length of the password, checking if it's an integer and
      * higher than the minimum required length
      *
-     * @param  value            integer     Length of the generated password
-     * @return PasswordGen      this        The current instance of PasswordGen
+     * @param value {number} Length of the generated password
+     * @returns {PasswordGen} The current instance of PasswordGen
      */
     setLength(value = 0){
         if(
@@ -218,15 +205,15 @@ export default class PasswordGen {
      * Set the keyspace of the password generator, checking if it's set and not
      * an empty string
      *
-     * @param  keyspace         string      Sets to be used for generator
-     * @return PasswordGen      this        The current instance of PasswordGen
+     * @param keyspace {string} The keyspace to be used by the generator
+     * @returns {PasswordGen} The current instance of PasswordGen
      */
     setKeyspace(keyspace = ''){
         if(typeof keyspace === 'string' && keyspace !== ''){
             if(keyspace.length < this.constructor.maximum_random_integer){
                 this.keyspace = keyspace;
             } else {
-                console.log(this.errorTooLong('keyspace'));
+                console.log(`The keyspace is too long, falling back to default`);
             }
         }
         
@@ -237,8 +224,8 @@ export default class PasswordGen {
      * Generate the keyspace of the password generator using the character
      * groups
      *
-     * @param  sets             string      Sets to be used for generator
-     * @return PasswordGen      this        The current instance of PasswordGen
+     * @param sets {string} Sets to be used for the generator
+     * @returns {PasswordGen} The current instance of PasswordGen
      */
     generateKeyspace(sets = this.constructor.default_sets){
         this.keyspace = '';
@@ -252,7 +239,7 @@ export default class PasswordGen {
             typeof sets === 'string'
                 &&
             this.constructor.arrayKeySearch(
-                sets, this.constructor.character_sets
+                sets.split(''), this.constructor.character_sets
             )
         ){
             /*--------------------------------------
@@ -273,18 +260,18 @@ export default class PasswordGen {
         }
         
         if(this.keyspace.length > this.constructor.maximum_random_integer){
-            console.log(this.errorTooLong('keyspace'));
+            console.log(`The keyspace is too long, falling back to default`);
             this.generateKeyspace();
         }
         
         return this;
     }
-    
+
     /**
      * Generate the password by selecting a random character from
      * the keyspace generated
      *
-     * @return string           password    The generated password
+     * @returns {string} The generated password
      */
     generatePassword(){
         let password = '';
@@ -299,9 +286,9 @@ export default class PasswordGen {
     }
     
     /**
-     * Getter for password
+     * The generated password - New one each time this is accessed
      *
-     * @return string                       The generated password
+     * @returns {string}
      */
     get password(){
         return this.generatePassword();

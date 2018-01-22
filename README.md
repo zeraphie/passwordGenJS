@@ -8,12 +8,12 @@ This is available as a package on npm so you can add this to your project by usi
 
 **npm**
 ```bash
-npm install z-password-gen --save-dev --production
+npm install z-password-gen
 ```
 
 **yarn**
 ```bash
-yarn add z-password-gen --dev
+yarn add z-password-gen
 ```
 
 ## Usage
