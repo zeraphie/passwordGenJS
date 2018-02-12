@@ -46,7 +46,7 @@ gulp.task('js', ['clean:js'], function() {
             presets: ['env']
         })
         .bundle()
-        .pipe(source('pjax.js'))
+        .pipe(source('passwordGen.js'))
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(uglify())
