@@ -1,6 +1,6 @@
 {
   "name": "z-password-gen",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A library to generate a cryptographically secure password",
   "main": "src/PasswordGen.js",
   "scripts": {
